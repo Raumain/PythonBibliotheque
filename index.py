@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g, request, session, redirect, url_for
+from flask import Flask, render_template, g
 import sqlite3
 import os
 
@@ -21,8 +21,22 @@ def close_connection(exception):
 
 
 @app.route("/")
-def index():
-    return render_template('index.html')
+def hello_world():
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT * FROM Book')
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
+    conn.close()
+    return render_template('index.html', books=rows)
+
+@app.route("/login")
+def login():
+    return render_template('login.html')
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
