@@ -1,6 +1,5 @@
-from flask import Flask
+from flask import Flask, render_template, g
 import sqlite3
-from flask import g
 
 DATABASE = 'db/database.db'
 
@@ -20,6 +19,9 @@ def close_connection(exception):
 
 @app.route("/")
 def hello_world():
-    cur = get_db().cursor()
-    return "<p>Je suis homo.. sapiens LOL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>"
+    return render_template('index.html')
+
+@app.route("/login")
+def login():
+    return render_template('login.html')
 
