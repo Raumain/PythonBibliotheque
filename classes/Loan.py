@@ -1,8 +1,8 @@
-import sqlite3
+from db.database import get_db
 
 
 class Loan:
-    def __init__(self, _id, _user_id, _book_id, _date_start, _date_end, price_per_day):
+    def __init__(self, _id=None, _user_id=None, _book_id=None, _date_start=None, _date_end=None, price_per_day=None):
         self._id = _id
         self._user_id = _user_id
         self._book_id = _book_id
@@ -11,22 +11,26 @@ class Loan:
         self._price_per_day = price_per_day
         self._total_price = 0
 
-    # SETTERS
-
-    def create_loan(self):
-        # tentative de faire une query SQL
-        query = "INSERT INTO loan () VALUES (?, ?)"
-        cur = get_db().execute(query, [self._id, self._price_per_day])
+    @staticmethod
+    def create_loan(loan):
+        query = ("INSERT INTO loan (user_id, book_id, date_start, date_end, price, total_price) "
+                 "VALUES (?, ?, ?, ?, ?, ?);")
+        cur = get_db().execute(query,
+                               [loan.get_user_id(), loan.get_book_id(), loan.get_date_start(), loan.get_date_end(),
+                                loan.get_price_per_day(), loan.get_total_price()])
         rv = cur.fetchall()
         cur.close()
         print(rv)
         return True
 
+    @staticmethod
     def end_loan(self):
         pass
 
-    def set_id(self, id):
-        self._id = id
+    # SETTERS
+
+    def set_id(self, loan_id):
+        self._id = loan_id
 
     def set_user_id(self, user_id):
         self._user_id = user_id
