@@ -17,6 +17,7 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+
 @app.route("/")
 def hello_world():
     return render_template('index.html')
@@ -25,3 +26,6 @@ def hello_world():
 def login():
     return render_template('login.html')
 
+@app.route("/login")
+def login():
+    return render_template('login.html')
