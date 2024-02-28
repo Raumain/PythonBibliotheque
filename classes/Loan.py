@@ -19,6 +19,7 @@ class Loan:
         cur = get_db().execute(query, [self._id, self._price_per_day])
         rv = cur.fetchall()
         cur.close()
+        print(rv)
         return True
 
     def end_loan(self):
