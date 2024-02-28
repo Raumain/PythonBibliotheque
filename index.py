@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import sqlite3
 from classes.Loan import Loan
 
-DATABASE = 'database.db'
+DATABASE = 'db/database.db'
 
 app = Flask(__name__)
 
