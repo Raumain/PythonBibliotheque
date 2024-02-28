@@ -1,3 +1,6 @@
+import sqlite3
+
+
 class Loan:
     def __init__(self, _id, _user_id, _book_id, _date_start, _date_end, price_per_day):
         self._id = _id
@@ -11,7 +14,12 @@ class Loan:
     # SETTERS
 
     def create_loan(self):
-        pass
+        # tentative de faire une query SQL
+        query = "INSERT INTO loan () VALUES (?, ?)"
+        cur = get_db().execute(query, [self._id, self._price_per_day])
+        rv = cur.fetchall()
+        cur.close()
+        return True
 
     def end_loan(self):
         pass
