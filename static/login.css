@@ -1,0 +1,27 @@
+a {
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.container {
+  display: flex;
+  align-items: top;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 100%;
+  gap: 4rem;
+}
+
+.form-wrapper {
+  border: 1px #2a2a2a solid;
+  border-radius: 0.3rem;
+  width: 50%;
+  padding: 1rem;
+}
+
+.form-wrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}

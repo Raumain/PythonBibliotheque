@@ -9,15 +9,16 @@
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
+      href="{{ url_for('static', filename='index.css') }}"
     />
     <title>Bibilothèque</title>
   </head>
   <body>
+    <a href="/login">Login</a>
     <h1>Bibilothèque</h1>
     <div class="container">
-      <div class="form-wrapper">
-        <h2>Rechercher un livre</h2>
+      <details class="form-wrapper">
+        <summary>Rechercher un livre</summary>
         <form action="/search" method="post">
           <div>
             <label for="title">Titre</label>
@@ -37,9 +38,9 @@
           </div>
           <button type="submit" class="btn">Rechercher</button>
         </form>
-      </div>
-      <div class="form-wrapper">
-        <h2>Ajouter un livre</h2>
+      </details>
+      <details class="form-wrapper">
+        <summary>Ajouter un livre</summary>
         <form action="/add" method="post">
           <div>
             <label for="title">Titre</label>
@@ -59,7 +60,7 @@
           </div>
           <button type="submit" class="btn">Ajouter</button>
         </form>
-      </div>
+      </details>
     </div>
   </body>
 </html>
