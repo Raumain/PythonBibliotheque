@@ -1,6 +1,3 @@
-from db.database import get_db
-
-
 class Loan:
     def __init__(self, _id=None, _user_id=None, _book_id=None, _date_start=None, _date_end=None, price_per_day=None):
         self._id = _id
@@ -12,12 +9,12 @@ class Loan:
         self._total_price = 0
 
     @staticmethod
-    def create_loan(loan):
+    def create_loan(db, loan):
         query = ("INSERT INTO loan (user_id, book_id, date_start, date_end, price, total_price) "
                  "VALUES (?, ?, ?, ?, ?, ?);")
-        cur = get_db().execute(query,
-                               [loan.get_user_id(), loan.get_book_id(), loan.get_date_start(), loan.get_date_end(),
-                                loan.get_price_per_day(), loan.get_total_price()])
+        cur = db.execute(query,
+                         [loan.get_user_id(), loan.get_book_id(), loan.get_date_start(), loan.get_date_end(),
+                          loan.get_price_per_day(), loan.get_total_price()])
         rv = cur.fetchall()
         cur.close()
         print(rv)
