@@ -65,7 +65,7 @@ def login():
             session['firstname'] = firstname
             session['mail'] = mail
 
-            return redirect(url_for('hello_world'))
+            return redirect(url_for('index'))
 
     return render_template('login.html')
 
