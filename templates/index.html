@@ -21,8 +21,8 @@
       {% else %}
       <a href="/login">Login</a>
       {% endif %}
+      <a href="/register-book">Enregistrer un livre</a>
     </div>
-    <a href="/register-book">Enregistrer un livre</a>
     <h1>Bibilothèque</h1>
     <div class="container">
       <form action="">
@@ -36,14 +36,14 @@
         <ul>
           {% for book in books %}
           <li>
-            <a href="{{book[0]}}">
+            <a href="/book/{{ book[0] }}">
               <img
                 src="https://picsum.photos/200"
                 alt="placeholder"
                 width="150"
                 height="150"
               />
-              <p href="/book/{{ book[0] }}">
+              <p>
                 <span>{{ book[1] }}</span>
                 <span>Par {{book[4]}}</span>
                 <small>{{book[5]}}</small>
