@@ -4,7 +4,7 @@ import sqlite3
 import os
 from classes.Loan import Loan
 
-DATABASE = 'db/database'
+DATABASE = 'projet/db/database'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -35,7 +35,7 @@ def index():
     for row in rows:
         print(row)
     conn.close()
-    return render_template('index.html', books=rows)
+    return render_template('index.html', books=rows, session=session)
 
 
 

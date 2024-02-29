@@ -15,9 +15,9 @@
   </head>
   <body>
     <div class="is-login">
-      {% if session['name'] %}
+      {% if session['firstname'] %}
       <a href="/logout">Logout</a>
-      <p>Bienvenue {{session['name']}}</p>
+      <p>Bienvenue {{session['firstname']}}</p>
       {% else %}
       <a href="/login">Login</a>
       {% endif %}
