@@ -24,7 +24,7 @@ def close_connection(exception):
 
 
 @app.route("/")
-def hello_world():
+def index():
     conn = get_db()
     cursor = conn.cursor()
 
