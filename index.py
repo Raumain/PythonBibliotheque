@@ -2,6 +2,7 @@ from flask import Flask, render_template, g, request, session, redirect, url_for
 import sqlite3
 import os
 from classes.Loan import Loan
+from classes.user import User
 
 DATABASE = 'db/database'
 
@@ -36,7 +37,6 @@ def hello_world():
     return render_template('index.html', books=rows)
 
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -63,6 +63,7 @@ def login():
 
     return render_template('login.html')
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -74,17 +75,25 @@ def register():
 
         db = get_db()
         cursor = db.cursor()
-        cursor.execute('INSERT INTO User (id, name, first_name, address, mail, password, address) VALUES (23, ?, ?, ?, ?, ?, ?)', (name, firstname, address, mail, password, address))
+        cursor.execute(
+            'INSERT INTO User (id, name, first_name, address, mail, password, address) VALUES (23, ?, ?, ?, ?, ?, ?)',
+            (name, firstname, address, mail, password, address))
         db.commit()
 
         return redirect(url_for('index'))
 
     return render_template('login.html')
 
+
 @app.route("/loan")
 def loan():
-    return render_template('loan.html')
-  
+    if session.get('user_id') is None:
+        return redirect(url_for('index'))
+
+    user = User(session.get('user_id'), session.get('name'), session.get('firstname'), '', '', '')
+    return render_template('loan.html', user=user)
+
+
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
@@ -97,11 +106,11 @@ def logout():
 # API
 @app.route('/api/new-loan', methods=['POST'])
 def CreateNewLoanEndpoint():
-    book_id = request.form['book_id']
-    user_id = request.form['user_id']
-    date_start = request.form['date_start']
-    date_end = request.form['date_end']
-    price = request.form['price']
+    book_id = request.form.get('book_id')
+    user_id = request.form.get('user_id')
+    date_start = request.form.get('date_start')
+    date_end = request.form.get('date_end')
+    price = request.form.get('price')
 
     new_loan = Loan(book_id, user_id, date_start, date_end, price)
     Loan.create_loan(get_db(), new_loan)
