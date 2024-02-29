@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, request, session, redirect, url_for
 import sqlite3
 import os
 
@@ -31,10 +31,6 @@ def hello_world():
         print(row)
     conn.close()
     return render_template('index.html', books=rows)
-
-@app.route("/login")
-def login():
-    return render_template('login.html')
 
 
 
