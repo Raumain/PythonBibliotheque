@@ -115,3 +115,23 @@ def CreateNewLoanEndpoint():
     Loan.create_loan(get_db(), new_loan)
 
     return f'<h1>Emprunt enregistré !</a>'
+
+
+@app.route('/register-book', methods=['GET', 'POST'])
+def register_book():
+    if request.method == 'POST':
+        title = request.form['title']
+        type = request.form['type']
+        genre = request.form['genre']
+        editor = request.form['editor']
+        author = request.form['author']
+        release_year = request.form['release_year']
+
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute('INSERT INTO Book (title, type, genre, editor, author, release_year, borrowed) VALUES (?, ?, ?, ?, ?, ?, false)', (title, type, genre, editor, author, release_year))
+        db.commit()
+
+        return redirect(url_for('index'))
+
+    return render_template('book-form.html')
