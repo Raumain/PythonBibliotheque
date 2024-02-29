@@ -14,7 +14,14 @@
     <title>Bibilothèque</title>
   </head>
   <body>
-    <a href="/login">Login</a>
+    <div class="is-login">
+      {% if session['name'] %}
+      <a href="/logout">Logout</a>
+      <p>Bienvenue {{session['name']}}</p>
+      {% else %}
+      <a href="/login">Login</a>
+      {% endif %}
+    </div>
     <h1>Bibilothèque</h1>
     <div class="container">
       <form action="">
@@ -28,14 +35,14 @@
         <ul>
           {% for book in books %}
           <li>
-            <a href="{{book[0]}}">
+            <a href="/book/{{book[0]}}">
               <img
                 src="https://picsum.photos/200"
                 alt="placeholder"
                 width="150"
                 height="150"
               />
-              <p href="/book/{{ book[0] }}">
+              <p>
                 <span>{{ book[1] }}</span>
                 <span>Par {{book[4]}}</span>
                 <small>{{book[5]}}</small>
