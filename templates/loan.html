@@ -7,7 +7,11 @@
       href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     />
     <title>Emprunter un book</title>
-  </head>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+</head>
 
   <body>
     <h1>faire un emprunt de book</h1>
@@ -16,14 +20,15 @@
 
       <div>
         <label for="book_id">Livre à prêter</label>
-        <select name="book_id" id="book_id"></select>
+        <select name="book_id" id="book_id">
+            {% for user in users %}
+                <option value="{{ user.get_id() }}">{{ user.get_name() }}</option>
+            {% endfor %}
+        </select>
 
         <label for="user_id">Client</label>
-        <select name="user_id" id="user_id"></select>
-      </div>
-
-      <label for="date_start">Date de début du prêt</label>
-      <input type="date" name="date_start" id="date_start" />
+        <input type="text" id="user_id" name="user_id" value="{{ user.get_name() }}">
+    </div>
 
       <label for="date_end">Date de fin du prêt</label>
       <input type="date" name="date_end" id="date_end" />
