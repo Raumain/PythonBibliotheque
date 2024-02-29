@@ -1,4 +1,5 @@
 from flask import Flask, render_template, g, request, session, redirect, url_for
+from flask_bcrypt import Bcrypt
 import sqlite3
 import os
 from classes.Loan import Loan
@@ -7,6 +8,7 @@ DATABASE = 'db/database'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+bcrypt = Bcrypt(app)
 
 
 def get_db():
@@ -45,10 +47,14 @@ def login():
 
         db = get_db()
         cursor = db.cursor()
-        cursor.execute('SELECT * FROM User WHERE mail = ? AND password = ?', (mail, password))
+        cursor.execute('SELECT * FROM User WHERE mail = ?', (mail,))
         user = cursor.fetchone()
+        passwordDB = user[4]
 
-        if user:
+        hashed_password_from_db = passwordDB
+        entered_password = password
+
+        if bcrypt.check_password_hash(hashed_password_from_db, entered_password):
             user_id = user[0]
             name = user[1]
             firstname = user[2]
@@ -59,7 +65,7 @@ def login():
             session['firstname'] = firstname
             session['mail'] = mail
 
-            return redirect(url_for('index'))
+            return redirect(url_for('hello_world'))
 
     return render_template('login.html')
 
@@ -72,9 +78,11 @@ def register():
         mail = request.form['mail']
         password = request.form['password']
 
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
         db = get_db()
         cursor = db.cursor()
-        cursor.execute('INSERT INTO User (id, name, first_name, address, mail, password, address) VALUES (23, ?, ?, ?, ?, ?, ?)', (name, firstname, address, mail, password, address))
+        cursor.execute('INSERT INTO User (name, first_name, address, mail, password, address) VALUES (?, ?, ?, ?, ?, ?)', (name, firstname, address, mail, hashed_password, address))
         db.commit()
 
         return redirect(url_for('index'))
