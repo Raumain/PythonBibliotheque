@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Enregistrer un livre</title>
+</head>
+
+<body>
+<h1>Enregistrer un livre</h1>
+<form action="/api/new-loan" method="post">
+    <input type="hidden" name="price" value="">
+
+    <div>
+        <label for="id">Livre à enregistrer</label>
+        <select name="id" id="id">
+        </select>
+    </div>
+
+    <div>
+        <label for="book_title">Titre du livre</label>
+        <input type="text" name="book_title" id="book_title">
+    </div>
+
+    <div>
+        <label for="book_type">Type de livre</label>
+        <input type="text" name="book_type" id="book_type">
+    </div>
+
+    <div>
+        <label for="book_genre">Genre du livre</label>
+        <input type="text" name="book_genre" id="book_genre">
+    </div>
+
+    <div>
+        <label for="book_edition">Quelle est l'édition ?</label>
+        <input type="text" name="book_edition" id="book_edition">
+    </div>
+
+    <div>
+        <label for="book_author">Qui est l'auteur ?</label>
+        <input type="text" name="book_author" id="book_author">
+    </div>
+
+    <div>
+        <label for="release_year">Année de publication</label>
+        <input type="number" name="release_year" id="release_year">
+    </div>
+
+    <button type="submit">Créer un nouveau livre</button>
+</form>
+</body>
+</html>

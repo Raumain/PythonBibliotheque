@@ -1,11 +1,13 @@
 from flask import g
 
+
 # Je me connecte à la base de données
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(app.config['DATABASE'])
     return db
+
 
 # J'exécute une requête SQL sur la base de données
 def query_db(query, args=(), one=False):
@@ -14,6 +16,7 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
+
 
 class Books:
     def __init__(self, id, title, type, genre, editor, author, release_year, borrowed):
@@ -51,15 +54,16 @@ class Books:
         print(f"Type de livre: {self.type}")
         print(f"Genre du livre: {self.genre}")
 
-
         # Je récupère l'état d'emprunt du livre depuis la base de données
         borrowed_status = query_db("SELECT borrowed FROM Book WHERE id = ?", [self.id], one=True)
         if borrowed_status:
             borrowed = borrowed_status[0]
             print(f"Emprunté: {'Oui' if borrowed else 'Non'}")
 
+
 # Je créer une instance de la classe Books
-my_book = Books(id=1, title="Le Seigneur des Anneaux", type="Roman", genre="Fantasy", editor="Houghton Mifflin", author="J.R.R. Tolkien", release_year=1954, borrowed=False)
+my_book = Books(id=1, title="Le Seigneur des Anneaux", type="Roman", genre="Fantasy", editor="Houghton Mifflin",
+                author="J.R.R. Tolkien", release_year=1954, borrowed=False)
 
 # J'affiche les détails du livre
 my_book.show_details()
