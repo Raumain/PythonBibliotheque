@@ -1,17 +1,20 @@
 from flask import Flask, render_template, g, request, session, redirect, url_for
 import sqlite3
 import os
+from classes.Loan import Loan
 
 DATABASE = 'db/database'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
     return db
+
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -78,6 +81,10 @@ def register():
 
     return render_template('login.html')
 
+@app.route("/loan")
+def loan():
+    return render_template('loan.html')
+  
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
@@ -85,3 +92,18 @@ def logout():
     session.pop('firstname', None)
     session.pop('mail', None)
     return redirect(url_for('login'))
+
+
+# API
+@app.route('/api/new-loan', methods=['POST'])
+def CreateNewLoanEndpoint():
+    book_id = request.form['book_id']
+    user_id = request.form['user_id']
+    date_start = request.form['date_start']
+    date_end = request.form['date_end']
+    price = request.form['price']
+
+    new_loan = Loan(book_id, user_id, date_start, date_end, price)
+    Loan.create_loan(get_db(), new_loan)
+
+    return f'<h1>Emprunt enregistré !</a>'
