@@ -4,7 +4,7 @@ import sqlite3
 import os
 from classes.Loan import Loan
 
-DATABASE = 'projet/db/database'
+DATABASE = 'db/database'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
