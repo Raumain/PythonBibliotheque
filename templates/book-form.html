@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Enregistrer un livre</title>
+</head>
+
+<body>
+<h1>Enregistrer un livre</h1>
+<form action="/register-book" method="post">
+    <div>
+        <label for="title">Titre du livre</label>
+        <input type="text" name="title" id="title">
+    </div>
+
+    <div>
+        <label for="type">Type de livre</label>
+        <input type="text" name="type" id="type">
+    </div>
+
+    <div>
+        <label for="genre">Genre du livre</label>
+        <input type="text" name="genre" id="genre">
+    </div>
+
+    <div>
+        <label for="editor">Quelle est l'édition ?</label>
+        <input type="text" name="editor" id="editor">
+    </div>
+
+    <div>
+        <label for="author">Qui est l'auteur ?</label>
+        <input type="text" name="author" id="author">
+    </div>
+
+    <div>
+        <label for="release_year">Année de publication</label>
+        <input type="number" name="release_year" id="release_year">
+    </div>
+
+    <button type="submit">Créer un nouveau livre</button>
+</form>
+</body>
+</html>
