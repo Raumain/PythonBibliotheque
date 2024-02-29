@@ -14,16 +14,14 @@
     <title>Bibilothèque</title>
   </head>
   <body>
-    {% if session['name'] %}
     <div class="is-login">
+      {% if session['name'] %}
       <a href="/logout">Logout</a>
       <p>Bienvenue {{session['name']}}</p>
-    </div>
-    {% else %}
-    <div class="is-login">
+      {% else %}
       <a href="/login">Login</a>
+      {% endif %}
     </div>
-    {% endif %}
     <h1>Bibilothèque</h1>
     <div class="container">
       <form action="">

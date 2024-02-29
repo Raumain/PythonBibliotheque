@@ -36,7 +36,7 @@ def index():
 
 
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         mail = request.form['mail']
@@ -67,8 +67,9 @@ def book(book_id: int):
     print(book_id)
     db = get_db()
     cursor = db.cursor()
-    cursor.execute('SELECT * FROM Book WHERE id = ?', book_id)
+    cursor.execute('SELECT * FROM Book WHERE id = ?', [book_id])
     book = cursor.fetchone()
+    db.close()
     return render_template('book.html', book=book)
 
 @app.route('/register', methods=['GET', 'POST'])

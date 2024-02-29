@@ -1,0 +1,70 @@
+.is-login {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.is-login > * {
+  margin: 0;
+}
+
+.book {
+  width: 100%;
+  height: calc(100vh / 2);
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  gap: 4rem;
+}
+
+.book img {
+  width: 300px;
+}
+
+.book .book_info {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book .book_info div:first-of-type h1 {
+  font-size: 2em;
+  margin: 10px 0;
+}
+
+.book .book_info div:first-of-type p {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.book .book_info div:first-of-type p:nth-child(3) {
+  font-size: 1em;
+}
+
+.book .book_info div:first-of-type p > small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5em;
+  padding: 0.1rem 0.3rem;
+  border-radius: 1rem;
+  background: yellow;
+  color: black;
+  width: fit-content;
+  margin-top: 2rem;
+}
+
+.book .book_info div:first-of-type a {
+  font-size: 1.5em;
+  margin: 10px 0;
+  text-decoration: none;
+  color: #000;
+}
+
+[role="button"] {
+  width: fit-content;
+}
