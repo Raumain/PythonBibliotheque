@@ -4,7 +4,7 @@ import sqlite3
 import os
 from classes.Loan import Loan
 
-DATABASE = 'db/database'
+DATABASE = 'projet/db/database'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -68,6 +68,16 @@ def login():
             return redirect(url_for('index'))
 
     return render_template('login.html')
+
+@app.route("/book/<int:book_id>")
+def book(book_id: int):
+    print(book_id)
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM Book WHERE id = ?', [book_id])
+    book = cursor.fetchone()
+    db.close()
+    return render_template('book.html', book=book)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
