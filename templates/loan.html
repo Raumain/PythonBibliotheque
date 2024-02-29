@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <title>Emprunter un book</title>
+  </head>
+
+  <body>
+    <h1>faire un emprunt de book</h1>
+    <form action="/api/new-loan" method="post">
+      <input type="hidden" name="price" value="" />
+
+      <div>
+        <label for="book_id">Livre à prêter</label>
+        <select name="book_id" id="book_id"></select>
+
+        <label for="user_id">Client</label>
+        <select name="user_id" id="user_id"></select>
+      </div>
+
+      <label for="date_start">Date de début du prêt</label>
+      <input type="date" name="date_start" id="date_start" />
+
+      <label for="date_end">Date de fin du prêt</label>
+      <input type="date" name="date_end" id="date_end" />
+
+      <button>Créer un nouveau prêt</button>
+    </form>
+  </body>
+</html>

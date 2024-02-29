@@ -14,53 +14,46 @@
     <title>Bibilothèque</title>
   </head>
   <body>
-    <a href="/login">Login</a>
+    {% if session['name'] %}
+    <div class="is-login">
+      <a href="/logout">Logout</a>
+      <p>Bienvenue {{session['name']}}</p>
+    </div>
+    {% else %}
+    <div class="is-login">
+      <a href="/login">Login</a>
+    </div>
+    {% endif %}
     <h1>Bibilothèque</h1>
     <div class="container">
-      <details class="form-wrapper">
-        <summary>Rechercher un livre</summary>
-        <form action="/search" method="post">
-          <div>
-            <label for="title">Titre</label>
-            <input type="text" name="title" id="title" />
-          </div>
-          <div>
-            <label for="author">Auteur</label>
-            <input type="text" name="author" id="author" />
-          </div>
-          <div>
-            <label for="year">Année</label>
-            <input type="text" name="year" id="year" />
-          </div>
-          <div>
-            <label for="genre">Genre</label>
-            <input type="text" name="genre" id="genre" />
-          </div>
-          <button type="submit" class="btn">Rechercher</button>
-        </form>
-      </details>
-      <details class="form-wrapper">
-        <summary>Ajouter un livre</summary>
-        <form action="/add" method="post">
-          <div>
-            <label for="title">Titre</label>
-            <input type="text" name="title" id="title" />
-          </div>
-          <div>
-            <label for="author">Auteur</label>
-            <input type="text" name="author" id="author" />
-          </div>
-          <div>
-            <label for="year">Année</label>
-            <input type="text" name="year" id="year" />
-          </div>
-          <div>
-            <label for="genre">Genre</label>
-            <input type="text" name="genre" id="genre" />
-          </div>
-          <button type="submit" class="btn">Ajouter</button>
-        </form>
-      </details>
+      <form action="">
+        <fieldset role="group">
+          <input type="search" placeholder="Rechercher un livre" />
+          <input type="submit" value="Rechercher" />
+        </fieldset>
+      </form>
+      <div>
+        <h2>Les livres</h2>
+        <ul>
+          {% for book in books %}
+          <li>
+            <a href="/book/{{book[0]}}">
+              <img
+                src="https://picsum.photos/200"
+                alt="placeholder"
+                width="150"
+                height="150"
+              />
+              <p>
+                <span>{{ book[1] }}</span>
+                <span>Par {{book[4]}}</span>
+                <small>{{book[5]}}</small>
+              </p>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
   </body>
 </html>
