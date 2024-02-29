@@ -153,3 +153,20 @@ def register_book():
         return redirect(url_for('index'))
 
     return render_template('book-form.html')
+
+
+@app.route('/search', methods=['POST'])
+def search():
+    if request.method == 'POST':
+        search_query = request.form['search']
+
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM Book WHERE title ILIKE ?', ('%' + search_query + '%',))
+        search_results = cursor.fetchall()
+        conn.close()
+
+        if search_results:
+            return render_template('index.html', books=search_results)
+        else :
+            redirect(url_for('index'))

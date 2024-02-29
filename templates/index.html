@@ -25,14 +25,15 @@
     </div>
     <h1>Bibilothèque</h1>
     <div class="container">
-      <form action="">
+      <form action="/search">
         <fieldset role="group">
-          <input type="search" placeholder="Rechercher un livre" />
+          <input type="search" placeholder="Rechercher un livre" id="search" name="search" />
           <input type="submit" value="Rechercher" />
         </fieldset>
       </form>
+      {% if books %}
       <div>
-        <h2>Les livres</h2>
+        <h2>{% if search_query %}Résultats de la recherche{% else %}Les livres{% endif %}</h2>
         <ul>
           {% for book in books %}
           <li>
@@ -53,6 +54,9 @@
           {% endfor %}
         </ul>
       </div>
+      {% else %}
+      <p>Aucun résultat</p>
+      {% endif %}
     </div>
   </body>
 </html>
