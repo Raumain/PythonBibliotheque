@@ -5,7 +5,8 @@ CREATE TABLE User
     first_name VARCHAR(100) NOT NULL,
     mail VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL
+    address VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Book

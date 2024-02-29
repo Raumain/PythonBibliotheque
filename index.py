@@ -59,11 +59,13 @@ def login():
             name = user[1]
             firstname = user[2]
             mail = user[3]
+            role = user[6]
 
             session['user_id'] = user_id
             session['name'] = name
             session['firstname'] = firstname
             session['mail'] = mail
+            session['role'] = role
 
             return redirect(url_for('index'))
 
@@ -92,7 +94,7 @@ def register():
 
         db = get_db()
         cursor = db.cursor()
-        cursor.execute('INSERT INTO User (name, first_name, address, mail, password, address) VALUES (?, ?, ?, ?, ?, ?)', (name, firstname, address, mail, hashed_password, address))
+        cursor.execute('INSERT INTO User (name, first_name, address, mail, password, address, role) VALUES (?, ?, ?, ?, ?, ?, "user")', (name, firstname, address, mail, hashed_password, address))
         db.commit()
 
         return redirect(url_for('index'))
