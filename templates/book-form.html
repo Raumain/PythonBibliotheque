@@ -1,57 +1,69 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     />
     <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='login.css') }}"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
     />
     <title>Enregistrer un livre</title>
-</head>
+  </head>
 
-<body>
-<h1 style="text-align: center">Enregistrer un livre</h1>
-<div class="container" style="display: flex; flex-direction: row; justify-content: center">
-    <div class="div form-wrapper">
-        <form action="/register-book" method="post">
-            <div>
-                <label for="title">Titre du livre</label>
-                <input type="text" name="title" id="title">
-            </div>
-
-            <div>
-                <label for="type">Type de livre</label>
-                <input type="text" name="type" id="type">
-            </div>
-
-            <div>
-                <label for="genre">Genre du livre</label>
-                <input type="text" name="genre" id="genre">
-            </div>
-
-            <div>
-                <label for="editor">Quelle est l'édition ?</label>
-                <input type="text" name="editor" id="editor">
-            </div>
-
-            <div>
-                <label for="author">Qui est l'auteur ?</label>
-                <input type="text" name="author" id="author">
-            </div>
-
-            <div>
-                <label for="release_year">Année de publication</label>
-                <input type="number" name="release_year" id="release_year">
-            </div>
-
-            <button type="submit">Créer un nouveau livre</button>
-        </form>
+  <body>
+    <div class="is-login">
+      <a href="/">Retour</a>
+      {% if session['firstname'] %}
+      <a href="/logout">Logout</a>
+      <p>Bienvenue {{session['firstname']}}</p>
+      {% else %}
+      <a href="/login">Login</a>
+      {% endif %}
     </div>
-</div>
-</body>
+    <h1 style="text-align: center">Enregistrer un livre</h1>
+    <div
+      class="container"
+      style="display: flex; flex-direction: row; justify-content: center"
+    >
+      <div class="div form-wrapper">
+        <form action="/register-book" method="post">
+          <div>
+            <label for="title">Titre du livre</label>
+            <input type="text" name="title" id="title" />
+          </div>
+
+          <div>
+            <label for="type">Type de livre</label>
+            <input type="text" name="type" id="type" />
+          </div>
+
+          <div>
+            <label for="genre">Genre du livre</label>
+            <input type="text" name="genre" id="genre" />
+          </div>
+
+          <div>
+            <label for="editor">Quelle est l'édition ?</label>
+            <input type="text" name="editor" id="editor" />
+          </div>
+
+          <div>
+            <label for="author">Qui est l'auteur ?</label>
+            <input type="text" name="author" id="author" />
+          </div>
+
+          <div>
+            <label for="release_year">Année de publication</label>
+            <input type="number" name="release_year" id="release_year" />
+          </div>
+
+          <button type="submit">Créer un nouveau livre</button>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
