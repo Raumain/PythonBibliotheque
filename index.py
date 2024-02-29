@@ -5,7 +5,7 @@ import os
 from classes.Loan import Loan
 from classes.user import User
 
-DATABASE = 'db/database'
+DATABASE = 'projet/db/database'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -98,6 +98,15 @@ def register():
         return redirect(url_for('index'))
 
     return render_template('login.html')
+
+
+@app.route("/admin", methods=['GET'])
+def admin():
+    # if session.get('user_id') is None or session.get('role') != "admin":
+    #     return redirect(url_for('index'))
+
+    users_and_books = User.get_users_with_books(get_db())
+    return render_template('admin.html', users=users_and_books)
 
 
 @app.route("/loan")
