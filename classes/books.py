@@ -18,7 +18,7 @@ def query_db(query, args=(), one=False):
     return (rv[0] if rv else None) if one else rv
 
 
-class Books:
+class Book:
     def __init__(self, id, title, type, genre, editor, author, release_year, borrowed):
         self.id = id
         self.title = title
@@ -28,6 +28,21 @@ class Books:
         self.author = author
         self.release_year = release_year
         self.borrowed = borrowed
+
+    @staticmethod
+    def get_all_books(db):
+        query = "select * from Book;"
+        cur = db.execute(query)
+        results = cur.fetchall()
+        cur.close()
+
+        books = []
+
+        for r in results:
+            book = Book(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7])
+            books.append(book)
+
+        return books
 
     def add_rent(self, borrower_name):
         # Je vérifie si le livre est déjà emprunté
@@ -60,16 +75,8 @@ class Books:
             borrowed = borrowed_status[0]
             print(f"Emprunté: {'Oui' if borrowed else 'Non'}")
 
+    def get_id(self):
+        return str(self.id)
 
-# Je créer une instance de la classe Books
-my_book = Books(id=1, title="Le Seigneur des Anneaux", type="Roman", genre="Fantasy", editor="Houghton Mifflin",
-                author="J.R.R. Tolkien", release_year=1954, borrowed=False)
-
-# J'affiche les détails du livre
-my_book.show_details()
-
-# J'ajoute une location
-my_book.add_rent("Alice")
-
-# Je supprime une location
-my_book.delete_rent("Bob")
+    def get_title(self):
+        return self.title

@@ -1,3 +1,15 @@
+import sqlite3
+from flask import g
+DATABASE = 'db/database'
+
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
+
+
 class User:
     def __init__(self, user_id, name, surname, mail, password, address):
         self._id = user_id
@@ -27,3 +39,11 @@ class User:
 
     def get_id(self):
         return self._id
+
+    def get_by_id(self, user_id):
+        query = "select * from User where id = ?;"
+        cur = get_db().execute(query, [user_id])
+        r = cur.fetchall()[0]
+        cur.close()
+
+        return User(r[0], r[1], r[2], r[3], r[4], r[5])

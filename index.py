@@ -1,9 +1,11 @@
 from flask import Flask, render_template, g, request, session, redirect, url_for
 from flask_bcrypt import Bcrypt
+from datetime import date
 import sqlite3
 import os
 from classes.Loan import Loan
 from classes.user import User
+from classes.books import Book
 
 DATABASE = 'db/database'
 
@@ -71,6 +73,7 @@ def login():
 
     return render_template('login.html')
 
+
 @app.route("/book/<int:book_id>")
 def book(book_id: int):
     print(book_id)
@@ -80,6 +83,7 @@ def book(book_id: int):
     book = cursor.fetchone()
     db.close()
     return render_template('book.html', book=book)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -102,13 +106,14 @@ def register():
     return render_template('login.html')
 
 
-@app.route("/loan")
-def loan():
+@app.route("/loan/<int:book_id>")
+def loan_id(book_id):
     if session.get('user_id') is None:
         return redirect(url_for('index'))
 
     user = User(session.get('user_id'), session.get('name'), session.get('firstname'), '', '', '')
-    return render_template('loan.html', user=user)
+    books = Book.get_all_books(get_db())
+    return render_template('loan.html', user=user, book_id=book_id, books=books)
 
 
 @app.route('/logout')
@@ -123,16 +128,15 @@ def logout():
 # API
 @app.route('/api/new-loan', methods=['POST'])
 def CreateNewLoanEndpoint():
-    book_id = request.form.get('book_id')
-    user_id = request.form.get('user_id')
-    date_start = request.form.get('date_start')
+    user_id = int(request.form.get('user_id'))
+    book_id = int(request.form.get('book_id'))
     date_end = request.form.get('date_end')
-    price = request.form.get('price')
+    price = int(request.form.get('price'))
 
-    new_loan = Loan(book_id, user_id, date_start, date_end, price)
+    new_loan = Loan(user_id, book_id, date.today().__str__(), date_end, price)
     Loan.create_loan(get_db(), new_loan)
 
-    return f'<h1>Emprunt enregistré !</a>'
+    return redirect(url_for('index'))
 
 
 @app.route('/register-book', methods=['GET', 'POST'])
@@ -147,7 +151,9 @@ def register_book():
 
         db = get_db()
         cursor = db.cursor()
-        cursor.execute('INSERT INTO Book (title, type, genre, editor, author, release_year, borrowed) VALUES (?, ?, ?, ?, ?, ?, false)', (title, type, genre, editor, author, release_year))
+        cursor.execute(
+            'INSERT INTO Book (title, type, genre, editor, author, release_year, borrowed) VALUES (?, ?, ?, ?, ?, ?, false)',
+            (title, type, genre, editor, author, release_year))
         db.commit()
 
         return redirect(url_for('index'))
@@ -169,6 +175,4 @@ def search():
         if search_results:
             return render_template('index.html', books=search_results)
         else:
-            return render_template('index.html', no_results=True)
-    else:
-        return redirect(url_for('index'))
+            redirect(url_for('index'))
