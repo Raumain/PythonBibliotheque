@@ -71,6 +71,7 @@ def login():
 
     return render_template('login.html')
 
+
 @app.route("/book/<int:book_id>")
 def book(book_id: int):
     print(book_id)
@@ -80,6 +81,7 @@ def book(book_id: int):
     book = cursor.fetchone()
     db.close()
     return render_template('book.html', book=book)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -102,13 +104,14 @@ def register():
     return render_template('login.html')
 
 
-@app.route("/loan")
-def loan():
+@app.route("/loan/<int:book_id>")
+def loan_id(book_id):
+    print(book_id is None)
     if session.get('user_id') is None:
         return redirect(url_for('index'))
 
     user = User(session.get('user_id'), session.get('name'), session.get('firstname'), '', '', '')
-    return render_template('loan.html', user=user)
+    return render_template('loan.html', user=user, book_id=book_id)
 
 
 @app.route('/logout')
@@ -147,7 +150,9 @@ def register_book():
 
         db = get_db()
         cursor = db.cursor()
-        cursor.execute('INSERT INTO Book (title, type, genre, editor, author, release_year, borrowed) VALUES (?, ?, ?, ?, ?, ?, false)', (title, type, genre, editor, author, release_year))
+        cursor.execute(
+            'INSERT INTO Book (title, type, genre, editor, author, release_year, borrowed) VALUES (?, ?, ?, ?, ?, ?, false)',
+            (title, type, genre, editor, author, release_year))
         db.commit()
 
         return redirect(url_for('index'))
@@ -168,5 +173,5 @@ def search():
 
         if search_results:
             return render_template('index.html', books=search_results)
-        else :
+        else:
             redirect(url_for('index'))
