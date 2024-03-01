@@ -106,6 +106,15 @@ def register():
     return render_template('login.html')
 
 
+@app.route("/admin", methods=['GET'])
+def admin():
+    # if session.get('user_id') is None or session.get('role') != "admin":
+    #     return redirect(url_for('index'))
+
+    users_and_books = User.get_users_with_books(get_db())
+    return render_template('admin.html', users=users_and_books)
+
+
 @app.route("/loan/<int:book_id>")
 def loan_id(book_id):
     if session.get('user_id') is None:
