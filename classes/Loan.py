@@ -34,8 +34,8 @@ class Loan:
         db.commit()
 
         user = User.get_by_id_static(int(loan.get_user_id()))
-        book = Book.get_book_by_id_static(int(loan.get_book_id()))
-        book.add_rent(user.get_name())
+        book_instance = Book.get_book_by_id_static(int(loan.get_book_id()))
+        book_instance.add_rent(user.get_name())
         rv = cur.fetchall()
         cur.close()
         return True
@@ -64,7 +64,6 @@ class Loan:
         return loan
 
     # SETTERS
-
     def set_id(self, loan_id):
         self._loan_id = loan_id
 
