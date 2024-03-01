@@ -36,17 +36,12 @@ class User:
     
     @staticmethod
     def get_users_with_books(db):
-        query = "select u.first_name, u.name, b.title, l.date_start, l.date_end from User u join Loan l on u.id = l.user_id join Book b on l.book_id = b.id;"
+        query = "select u.first_name, u.name, b.title, l.date_start, l.date_end, l.book_id from User u join Loan l on u.id = l.user_id join Book b on l.book_id = b.id;"
         cur = db.execute(query)
         results = cur.fetchall()
         cur.close()
-        print('ok')
-        print(results)
 
         return results
-        
-        
-        
        
 
     def get_name(self):

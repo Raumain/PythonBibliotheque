@@ -46,9 +46,9 @@ class Book:
         return books
 
     @staticmethod
-    def get_book_by_id_static(user_id):
+    def get_book_by_id_static(book_id):
         query = "select * from Book where id = ?;"
-        cur = get_db().execute(query, [user_id])
+        cur = get_db().execute(query, [book_id])
         r = cur.fetchone()
         cur.close()
 

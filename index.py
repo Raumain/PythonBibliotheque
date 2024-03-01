@@ -35,8 +35,7 @@ def index():
 
     cursor.execute('SELECT * FROM Book')
     rows = cursor.fetchall()
-    for row in rows:
-        print(row)
+
     conn.close()
     return render_template('index.html', books=rows, session=session)
 
@@ -76,7 +75,6 @@ def login():
 
 @app.route("/book/<int:book_id>")
 def book(book_id: int):
-    print(book_id)
     db = get_db()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM Book WHERE id = ?', [book_id])
@@ -108,8 +106,8 @@ def register():
 
 @app.route("/admin", methods=['GET'])
 def admin():
-    # if session.get('user_id') is None or session.get('role') != "admin":
-    #     return redirect(url_for('index'))
+    if session.get('user_id') is None or session.get('role') != "admin":
+        return redirect(url_for('index'))
 
     users_and_books = User.get_users_with_books(get_db())
     return render_template('admin.html', users=users_and_books)
@@ -123,6 +121,19 @@ def loan_id(book_id):
     user = User(session.get('user_id'), session.get('name'), session.get('firstname'), '', '', '')
     books = Book.get_all_books(get_db())
     return render_template('loan.html', user=user, book_id=book_id, books=books)
+
+
+@app.route("/end-loan/<int:book_id>")
+def end_loan(book_id):
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        return redirect(url_for('index'))
+
+    loan = Loan.get_loan_by_book_id(book_id, user_id)
+    print("loan id", loan.get_id())
+    Loan.end_loan(get_db(), loan)
+    return redirect(url_for('admin'))
 
 
 @app.route('/logout')

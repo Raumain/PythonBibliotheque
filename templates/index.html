@@ -21,6 +21,10 @@
       {% else %}
       <a href="/login">Login</a>
       {% endif %}
+
+    {% if session['role'] == 'admin' %}
+        <a href="/admin">Admin</a>
+    {% endif %}
       <a href="/register-book">Enregistrer un livre</a>
     </div>
     <h1>Bibilothèque</h1>

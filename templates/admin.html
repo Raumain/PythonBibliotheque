@@ -33,6 +33,7 @@
             <th>Livre</th>
             <th>Date d'emprunt</th>
             <th>Date de retour</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +44,11 @@
             <td>{{user[2]}}</td>
             <td>{{user[3]}}</td>
             <td>{{user[4]}}</td>
+            <td>
+                <form action="/end-loan/{{ user[5] }}">
+                    <button>Terminer le prêt</button>
+                </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>

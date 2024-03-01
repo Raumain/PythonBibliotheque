@@ -1,5 +1,16 @@
 from classes.user import User
 from classes.books import Book
+import sqlite3
+from flask import g
+
+DATABASE = 'db/database'
+
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
 
 
 class Loan:
@@ -30,10 +41,27 @@ class Loan:
         return True
 
     @staticmethod
-    def end_loan(self, loan):
-        user = User.get_by_id_static(int(loan.user_id()))
+    def end_loan(db, loan):
+        query = "delete from Loan where id = ?"
+
+        cur = db.execute(query,
+                         [loan.get_id()])
+        db.commit()
+
+        user = User.get_by_id_static(int(loan.get_user_id()))
         book = Book.get_book_by_id_static(int(loan.get_book_id()))
         book.delete_rent(user.get_name())
+
+    @staticmethod
+    def get_loan_by_book_id(book_id, user_id):
+        query = "select * from Loan where book_id = ? and user_id = ?;"
+        cur = get_db().execute(query, [book_id, user_id])
+        r = cur.fetchone()
+        cur.close()
+
+        loan = Loan(r[1], r[2], r[3], r[4], r[5])
+        loan.set_id(r[0])
+        return loan
 
     # SETTERS
 
