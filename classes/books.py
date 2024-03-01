@@ -90,3 +90,21 @@ class Book:
 
     def get_title(self):
         return self.title
+
+    def get_type(self):
+        return self.type
+
+    def get_genre(self):
+        return self.genre
+
+    def get_editor(self):
+        return self.editor
+
+    def get_author(self):
+        return self.author
+
+    def get_release_year(self):
+        return self.release_year
+
+    def get_borrowed(self):
+        return self.borrowed
