@@ -175,4 +175,7 @@ def search():
         if search_results:
             return render_template('index.html', books=search_results)
         else:
-            redirect(url_for('index'))
+            return render_template('index.html', no_results=True)
+
+    else:
+        return redirect(url_for('index'))
