@@ -7,7 +7,7 @@ from classes.Loan import Loan
 from classes.user import User
 from classes.books import Book
 
-DATABASE = 'projet/db/database'
+DATABASE = 'db/database'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
