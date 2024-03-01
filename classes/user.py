@@ -62,3 +62,12 @@ class User:
         cur.close()
 
         return User(r[0], r[1], r[2], r[3], r[4], r[5])
+
+    @staticmethod
+    def get_by_id_static(user_id):
+        query = "select * from User where id = ?;"
+        cur = get_db().execute(query, [user_id])
+        r = cur.fetchall()[0]
+        cur.close()
+
+        return User(r[0], r[1], r[2], r[3], r[4], r[5])

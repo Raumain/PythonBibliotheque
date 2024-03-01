@@ -1,3 +1,7 @@
+from classes.user import User
+from classes.books import Book
+
+
 class Loan:
     def __init__(self, _user_id=None, _book_id=None, _date_start=None, _date_end=None, price_per_day=None):
         self._loan_id = 0
@@ -14,16 +18,22 @@ class Loan:
                  "VALUES (?, ?, ?, ?, ?, ?);")
 
         cur = db.execute(query,
-                         [loan.get_user_id(), loan.get_book_id(), loan.get_date_start(), loan.get_date_end(),
-                          loan.get_price_per_day(), loan.get_total_price()])
+                         [int(loan.get_user_id()), int(loan.get_book_id()), loan.get_date_start(), loan.get_date_end(),
+                          float(loan.get_price_per_day()), float(loan.get_total_price())])
+        db.commit()
+
+        user = User.get_by_id_static(int(loan.get_user_id()))
+        book = Book.get_book_by_id_static(int(loan.get_book_id()))
+        book.add_rent(user.get_name())
         rv = cur.fetchall()
-        print(rv)
         cur.close()
         return True
 
     @staticmethod
-    def end_loan(self):
-        pass
+    def end_loan(self, loan):
+        user = User.get_by_id_static(int(loan.user_id()))
+        book = Book.get_book_by_id_static(int(loan.get_book_id()))
+        book.delete_rent(user.get_name())
 
     # SETTERS
 

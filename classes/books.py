@@ -13,6 +13,7 @@ def get_db():
 def query_db(query, args=(), one=False):
     cur = get_db().cursor()
     cur.execute(query, args)
+    get_db().commit()
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
@@ -43,6 +44,15 @@ class Book:
             books.append(book)
 
         return books
+
+    @staticmethod
+    def get_book_by_id_static(user_id):
+        query = "select * from Book where id = ?;"
+        cur = get_db().execute(query, [user_id])
+        r = cur.fetchone()
+        cur.close()
+
+        return Book(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7])
 
     def add_rent(self, borrower_name):
         # Je vérifie si le livre est déjà emprunté
