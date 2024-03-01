@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     />
     <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='book.css') }}"
+            rel="stylesheet"
+            href="{{ url_for('static', filename='book.css') }}"
     />
     <title>{{book[1]}}</title>
-  </head>
-  <body>
-    <div class="is-login">
-      <a href="/">Retour</a>
-      {% if session['firstname'] %}
-      <a href="/logout">Logout</a>
-      <p>Bienvenue {{session['firstname']}}</p>
-      {% else %}
-      <a href="/login">Login</a>
-      {% endif %}
-    </div>
-    <div class="book">
-      <img
-        src="https://picsum.photos/300/400"
-        alt="placeholder"
-        width="150"
-        height="150"
-      />
-      <div class="book_info">
+</head>
+<body>
+<div class="is-login">
+    <a href="/">Retour</a>
+    {% if session['firstname'] %}
+    <a href="/logout">Logout</a>
+    <p>Bienvenue {{session['firstname']}}</p>
+    {% else %}
+    <a href="/login">Login</a>
+    {% endif %}
+</div>
+<div class="book">
+    <img
+            src="https://picsum.photos/300/400"
+            alt="placeholder"
+            width="150"
+            height="150"
+    />
+    <div class="book_info">
         <div>
-          <h2>{{book[1]}}</h2>
-          <p>Par {{book[5]}} - {{book[4]}}</p>
-          <p>{{book[6]}}</p>
-          <p>
-            <small>{{book[2]}}</small>
-          </p>
+            <h2>{{book[1]}}</h2>
+            <p>Par {{book[5]}} - {{book[4]}}</p>
+            <p>{{book[6]}}</p>
+            <p>
+                <small>{{book[2]}}</small>
+            </p>
         </div>
+        {% if session['firstname'] %}
         <a href="/loan/{{book[0]}}" role="button">Emprunter</a>
-      </div>
+        {% endif %}
     </div>
-  </body>
+</div>
+</body>
 </html>

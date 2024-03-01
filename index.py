@@ -1,9 +1,11 @@
 from flask import Flask, render_template, g, request, session, redirect, url_for
 from flask_bcrypt import Bcrypt
+from datetime import date
 import sqlite3
 import os
 from classes.Loan import Loan
 from classes.user import User
+from classes.books import Book
 
 DATABASE = 'db/database'
 
@@ -106,12 +108,12 @@ def register():
 
 @app.route("/loan/<int:book_id>")
 def loan_id(book_id):
-    print(book_id is None)
     if session.get('user_id') is None:
         return redirect(url_for('index'))
 
     user = User(session.get('user_id'), session.get('name'), session.get('firstname'), '', '', '')
-    return render_template('loan.html', user=user, book_id=book_id)
+    books = Book.get_all_books(get_db())
+    return render_template('loan.html', user=user, book_id=book_id, books=books)
 
 
 @app.route('/logout')
@@ -126,16 +128,15 @@ def logout():
 # API
 @app.route('/api/new-loan', methods=['POST'])
 def CreateNewLoanEndpoint():
-    book_id = request.form.get('book_id')
-    user_id = request.form.get('user_id')
-    date_start = request.form.get('date_start')
+    user_id = int(request.form.get('user_id'))
+    book_id = int(request.form.get('book_id'))
     date_end = request.form.get('date_end')
-    price = request.form.get('price')
+    price = int(request.form.get('price'))
 
-    new_loan = Loan(book_id, user_id, date_start, date_end, price)
+    new_loan = Loan(user_id, book_id, date.today().__str__(), date_end, price)
     Loan.create_loan(get_db(), new_loan)
 
-    return f'<h1>Emprunt enregistré !</a>'
+    return redirect(url_for('index'))
 
 
 @app.route('/register-book', methods=['GET', 'POST'])
