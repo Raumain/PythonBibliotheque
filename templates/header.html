@@ -1,0 +1,77 @@
+<style>
+  .is-login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    padding: 0 2rem;
+  }
+
+  .is-login > div {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+  }
+  .is-login > div > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .is-login > div > * {
+    margin: 0;
+  }
+</style>
+<div class="is-login">
+  <div>
+    <a href="/">
+      <svg
+        id="Home_24"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <rect width="24" height="24" stroke="none" fill="#fff" opacity="0" />
+        <g transform="matrix(0.91 0 0 0.91 12 12)">
+          <path
+            style="
+              stroke: none;
+              stroke-width: 1;
+              stroke-dasharray: none;
+              stroke-linecap: butt;
+              stroke-dashoffset: 0;
+              stroke-linejoin: miter;
+              stroke-miterlimit: 4;
+              fill: #fff;
+              fill-rule: nonzero;
+              opacity: 1;
+            "
+            transform=" translate(-12, -11.55)"
+            d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 15 L 14 15 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"
+            stroke-linecap="round"
+          />
+        </g>
+      </svg>
+    </a>
+    {% if session['firstname'] %}
+    <p>Bienvenue {{session['firstname']}}</p>
+    {% endif %} {% if session['role'] == 'user' %}
+    <a href="/profil">Profil</a>
+    {% endif %}
+  </div>
+  <div>
+    {% if session['role'] == 'admin' %}
+    <a href="/admin">Admin</a>
+    {% endif %}
+    <a href="/register-book">Enregistrer un livre</a>
+    {% if session['firstname'] %}
+    <a href="/logout">Logout</a>
+    {% else %}
+    <a href="/login">Login</a>
+    {% endif %}
+  </div>
+</div>

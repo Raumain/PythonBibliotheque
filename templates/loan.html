@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8"/>
+  <head>
+    <meta charset="UTF-8" />
     <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     />
     <title>Emprunter un book</title>
     <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='loan.css') }}"
     />
-</head>
+  </head>
 
-<body>
-<h1>faire un emprunt de book</h1>
-<form action="/api/new-loan" method="post">
-    <input type="hidden" name="price" value="0"/>
+  <body>
+    {% include 'header.html' %}
+    <div class="container">
+      <h1>Faire un emprunt de book</h1>
+      <form action="/api/new-loan" method="post">
+        <input type="hidden" name="price" value="0" />
 
-    <div>
-        <label for="book_id">Livre à prêter</label>
+        <div>
+          <label for="book_id">Livre à prêter</label>
 
-        <select name="book_id" id="book_id">
-            {% for book in books %}
-                {% if request.path.split('/')[2] == book.get_id() %}
-                    <option selected value="{{ book.get_id() }}">{{ book.get_title() }}</option>
-                {% else %}
-                    <option value="{{ book.get_id() }}">{{ book.get_title() }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
+          <select name="book_id" id="book_id">
+            {% for book in books %} {% if request.path.split('/')[2] ==
+            book.get_id() %}
+            <option selected value="{{ book.get_id() }}">
+              {{ book.get_title() }}
+            </option>
+            {% else %}
+            <option value="{{ book.get_id() }}">{{ book.get_title() }}</option>
+            {% endif %} {% endfor %}
+          </select>
 
-        <label for="user_input">Client</label>
-        <input type="text" id="user_input" disabled value="{{ user.get_by_id(user.get_id()).get_name() }}">
-        <input type="hidden" id="user_id" name="user_id" value="{{ user.get_id() }}">
+          <label for="user_input">Client</label>
+          <input
+            type="text"
+            id="user_input"
+            disabled
+            value="{{ user.get_by_id(user.get_id()).get_name() }}"
+          />
+          <input
+            type="hidden"
+            id="user_id"
+            name="user_id"
+            value="{{ user.get_id() }}"
+          />
+        </div>
+
+        <label for="date_end">Date de fin du prêt</label>
+        <input type="date" name="date_end" id="date_end" />
+
+        <button>Créer un nouveau prêt</button>
+      </form>
     </div>
-
-    <label for="date_end">Date de fin du prêt</label>
-    <input type="date" name="date_end" id="date_end"/>
-
-    <button>Créer un nouveau prêt</button>
-</form>
-</body>
+  </body>
 </html>

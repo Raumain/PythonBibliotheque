@@ -14,15 +14,7 @@
     <title>{{book[1]}}</title>
 </head>
 <body>
-<div class="is-login">
-    <a href="/">Retour</a>
-    {% if session['firstname'] %}
-    <a href="/logout">Logout</a>
-    <p>Bienvenue {{session['firstname']}}</p>
-    {% else %}
-    <a href="/login">Login</a>
-    {% endif %}
-</div>
+{% include 'header.html' %}
 <div class="book">
     <img
             src="https://picsum.photos/300/400"

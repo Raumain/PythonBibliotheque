@@ -14,40 +14,22 @@
     <title>Admin</title>
   </head>
   <body>
-    <div class="is-login">
-      <a href="/">Retour</a>
-      {% if session['firstname'] %}
-      <a href="/logout">Logout</a>
-      <p>Bienvenue {{session['firstname']}}</p>
-      {% else %}
-      <a href="/login">Login</a>
-      {% endif %}
-    </div>
+    {% include 'header.html' %}
     <div class="container">
       <table>
         <thead>
           <tr>
-            <th>Prénom</th>
-            <th>Nom</th>
             <th>Livre</th>
             <th>Date d'emprunt</th>
             <th>Date de retour</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {% for user in users %}
           <tr>
-            <td>{{user[0]}}</td>
+            <td><a href="/book/{{user[3]}}">{{user[0]}}</a></td>
             <td>{{user[1]}}</td>
             <td>{{user[2]}}</td>
-            <td>{{user[3]}}</td>
-            <td>{{user[4]}}</td>
-            <td>
-                <form action="/end-loan/{{ user[5] }}">
-                    <button>Terminer le prêt</button>
-                </form>
-            </td>
           </tr>
           {% endfor %}
         </tbody>
